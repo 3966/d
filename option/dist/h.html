@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+     div{
+ border: 1px solid #000;
+ padding: 60px ;
+ width: 200px;
+
+ border-radius: 50%;
+ background: #EEFF99;
+ }
+</style>
+<body>
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="box_hilite">
+            <h5>Email Campaigns Selection</h5>
+          </div>
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-6 form-group">
+                <select class="selectpicker email_select" style="width: 100%;">
+                  <option value="" selected:disabled style="diaplay:none">Please select deployed email campaign</option>
+                  <?php foreach($emails as $key=>$val){ ?>
+                    <option value="<?php echo $val['id'];?>"><?php echo $val['email_name'];?></option>
+                  <?php }?>
+                </select>
+              </div>
+              <div class="col-sm-6 form-group">
+                <select class="selectpicker email_type_select" style="width: 100%;">
+                    <option value="" selected:disabled style="diaplay:none">Please select email response type</option>
+                    <option value="click" data-value="">Email Clicked</option>
+                    <option value="opened">Email Opened</option>
+                    <option value="no-opened">Email Non-Opened</option>
+                    <option value="send">Email Sent</option>
+                </select>
+              </div>
+              <script type="text/javascript">
+                $(function(){
+                   let email_id = null;
+                  let val = null;
+                  let tit = "";
+                  var send = function(val){
+                    $(".hit").html("...");
+                    $.ajax({
+                      url:"<?php echo API;?>/email/email_status?email_id="+email_id+"&type="+val,
+                      type:"post",
+                      success:function(d){
+                        let data = JSON.parse(d);
+                        console.log(data);
+                        $(".hit").html(tit+": "+data.count);
+                      }
+                    })
+                  }
+                  $(".email_select").on("change",function(){
+                    email_id = $(this).val();
+                    
+                    if(val!=null){
+                      send();
+                    }
+
+                  })
+                  $(".email_type_select").on("change",function(){
+                    val = $(this).val();
+                    tit = $(".email_type_select").find("option:selected").html();
+                    send();
+                  })
+
+                  $(".checked_email").on("click",function(){
+                    if(email_id==null || val==null){
+                      alert("Please select the message and type");
+                      return;
+                    }
+
+                    $.ajax({
+                      url:"<?php echo API;?>/email/save_email_send?email_id=<?php echo $_GET['email_id'];?>&type=email_select&limit="+val+"&target_email_id="+email_id,
+                      type:"post",
+                      success:function(){
+                        alert("Success!");
+                      },
+                      error:function(){
+                        alert("An error occurred Please contact the webmaster!");
+                      }
+                    })
+
+                  })
+                })
+                
+              </script>
+            </div>
+          </div>
+          <!-- <div class="col-sm-12" style="padding: 10px;">
+            <span class="hit"></span>
+          </div> -->
+          <!-- <div class="col-sm-12" style="padding:10px;margin-top: 30px;">
+            <div class="form-group">
+              <button type="button" class="btn btn-arrow Confirm_sent btn-arrow-sm checked_email" style="background-color: #f68e31;width: 400px;">
+                Select Now
+              </button>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-sm-12" style="padding:10px;margin-top: 30px;">
+          <div class="form-group">
+            <button type="button" class="btn btn-arrow Confirm_sent btn-arrow-sm cancel_all" style="background-color: #f68e31;">
+              Clear Deploying Pool
+            </button>
+          </div>
+        </div>
+
+</body>
+</html>

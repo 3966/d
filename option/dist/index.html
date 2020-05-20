@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ok {
+            width: 40%;
+            border: 1px solid #000;
+            background-color: #ffff;
+        }
+
+        .options-items {
+            width: 40%;
+            display: flex;
+            flex-direction: row;
+            /* flex-wrap: wrap; */
+            /* align-items:flex-start; */
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .options-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .options-items {
+            display: flex;
+            flex-direction: row;
+            font-size: 13px;
+            padding: 5px;
+        }
+
+        .items {
+            flex: 1;
+
+        }
+
+        .ite {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 2px solid #999;
+            position: relative;
+        }
+        .ite.active{
+            border:none;
+        }
+
+        .options-items label {
+            margin-left: 5px;
+            width: 90%;
+            padding: 5px;
+            word-wrap: break-word;
+            margin-top: -5px;
+        }
+        .options-items label.active{
+            background-color: #f5f5f5;
+        }
+        .options-items label:hover{
+            background-color: #f5f5f5;
+        }
+        .done.active {
+            display: block;
+        }
+
+        .done {
+            position: absolute;
+            left: -2px;
+            top: -2px;
+            width: 18px;
+            height: 18px;
+            text-align: center;
+            line-height:18px;
+            border-radius: 50%;
+            display: none;
+            stroke-width: 3;
+            color: #fff;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #f68e31;;
+            animation: fill-green 0.3s ease-in-out 0.3s forwards, scale 0.3s ease-in-out 0.1s both;
+            z-index: 9999;
+        }
+
+        .done .circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #f68e31;;
+            fill: none;
+            animation: stroke 0.2s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .done .check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.1s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes scale {
+
+            0%,
+            100% {
+                transform: none;
+            }
+
+            50% {
+                transform: scale3d(1.2, 1.2, 1);
+            }
+
+            80% {
+                transform: scale3d(0.8, 0.8, 1);
+            }
+        }
+
+        @keyframes fill-green {
+            100% {
+                box-shadow: inset 0px 0px 0px 25px #f68e31;;
+            }
+        }
+
+        @keyframes fill-red {
+            100% {
+                box-shadow: inset 0px 0px 0px 25px #e74c3c;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ok">
+        <div class="box radio">
+        </div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script src="./js/option.js"></script>
+    <script>
+        var myOptList = ["sdssdsds", "dsadssdas", "dsdasdasd", "sddasdasdfgdfgdfgfdgfdgdfgdfgdgdfgda", "dsdasdfgdfffffffffffgfdggggggggggggdfdgfasdsa", "sdasdasdsdads"];
+        $('.box').opts({
+            List: myOptList,
+            title:"你好啊"
+        })
+    </script>
+</body>
+
+</html>
